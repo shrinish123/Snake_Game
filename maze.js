@@ -1,3 +1,9 @@
+document.getElementById("clickSpeed").addEventListener("click", function() {
+    document.getElementById("dropdown").style.display = "block";
+
+
+});
+
 var speed = 200;
 
 document.getElementById("speed1").addEventListener("click", function() {
@@ -40,6 +46,9 @@ document.getElementById("speed8").addEventListener("click", function() {
 document.getElementById("mazeM").addEventListener("click", mazeMode);
 
 function mazeMode() {
+
+    document.getElementById("dropdown").style.display = "none";
+    document.getElementById("disScore").style.display = "block";
 
 
     var cvs = document.getElementById("canvas");
@@ -150,8 +159,7 @@ function mazeMode() {
         ctx.fillStyle = "yellow";
         ctx.fillRect(x * snakeW, y * snakeH, snakeW, snakeH);
 
-        ctx.fillStyle = "#000";
-        ctx.strokeRect(x * snakeW, y * snakeH, snakeW, snakeH);
+
 
     }
     //check collision 
@@ -195,8 +203,8 @@ function mazeMode() {
     }
 
     function drawScore(x) {
-        ctx.fillStyle = "yellow";
-        ctx.fillText("Score: " + x, 5, cvsH - 5);
+        displayScore.textContent = "Score: " + x;
+
     }
 
 
