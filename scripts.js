@@ -1,3 +1,11 @@
+var dropdown = document.getElementById("dropdown").style;
+
+document.getElementById("clickSpeed").addEventListener("click", function() {
+    document.getElementById("dropdown").style.display = "block";
+
+
+});
+
 var speed = 200;
 
 document.getElementById("speed1").addEventListener("click", function() {
@@ -33,6 +41,11 @@ document.getElementById("speed8").addEventListener("click", function() {
 
 });
 
+function backtohome() {
+    location.reload();
+}
+
+
 
 
 
@@ -43,9 +56,12 @@ document.getElementById("start").addEventListener("click", startTheGame);
 function startTheGame() {
 
 
+    document.getElementById("dropdown").style.display = "none";
+    document.getElementById("disScore").style.display = "block";
 
     var cvs = document.getElementById("canvas");
     var ctx = cvs.getContext("2d");
+    var displayScore = document.getElementById("disScore");
 
     var cvsW = cvs.width;
     var cvsH = cvs.height;
@@ -54,6 +70,7 @@ function startTheGame() {
     var snakeH = 10;
 
     var score = 0;
+
     //direction
 
     var direction = "right";
@@ -83,8 +100,8 @@ function startTheGame() {
             startY,
             distX,
             distY,
-            threshold = 150, //required min distance traveled to be considered swipe
-            restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+            threshold = 90, //required min distance traveled to be considered swipe
+            restraint = 150, // maximum distance allowed at the same time in perpendicular direction
             allowedTime = 300, // maximum time allowed to travel that distance
             elapsedTime,
             startTime,
@@ -135,11 +152,10 @@ function startTheGame() {
 
     function drawSnake(x, y) {
 
-        ctx.fillStyle = "#FFF";
+        ctx.fillStyle = "white";
         ctx.fillRect(x * snakeW, y * snakeH, snakeW, snakeH);
 
-        ctx.fillStyle = "#000";
-        ctx.strokeRect(x * snakeW, y * snakeH, snakeW, snakeH);
+
 
     }
     //create snake array 
@@ -165,8 +181,6 @@ function startTheGame() {
         ctx.fillStyle = "yellow";
         ctx.fillRect(x * snakeW, y * snakeH, snakeW, snakeH);
 
-        ctx.fillStyle = "#000";
-        ctx.strokeRect(x * snakeW, y * snakeH, snakeW, snakeH);
 
     }
     //check collision 
@@ -190,9 +204,16 @@ function startTheGame() {
     }
 
     function drawScore(x) {
-        ctx.fillStyle = "yellow";
-        ctx.fillText("Score: " + x, 5, cvsH - 5);
+        displayScore.textContent = "Score: " + x;
     }
+
+    function displayPopup() {
+        document.getElementById("popupId").style.display = "flex";
+    }
+
+
+
+
 
 
     function draw() {
@@ -229,9 +250,14 @@ function startTheGame() {
             snakeY++;
         }
 
+
         if (snakeX < 0 || snakeY < 0 || snakeX >= cvsW / snakeW || snakeY >= cvsH / snakeH || checkCollision(snakeX, snakeY, snake)) {
-            location.reload();
+            //location.reload();
+            setTimeout(displayPopup, 200);
+            var finalScore = score;
+
         }
+
 
         if (snakeX === food.x && snakeY === food.y) {
             food = {
